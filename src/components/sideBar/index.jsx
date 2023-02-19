@@ -30,7 +30,7 @@ function SideBar({primaryIcon , primaryTitle , secondaryItems=[] }) {
         <List component="div" disablePadding>
             {
                 secondaryItems.map((item) =>(
-                    <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemButton key={item.id} sx={{ pl: 4 }}>
                         <ListItemIcon>
                             {item.secondaryIcon}
                         </ListItemIcon>
