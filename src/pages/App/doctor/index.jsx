@@ -23,6 +23,21 @@ function Doctor() {
 		}
 	}
 
+  const [ education, setEducation ] = useState([1]);
+	
+	const handleOpenEducation = () => {
+		
+		setEducation([  ...education, education.length + 1 ])
+	} 
+
+	const handleCloseEducation = (index) => {
+		if(education !==1){
+			const values=[...education]
+			values.splice(index , 1)
+			setEducation(values)
+		}
+	}
+
 
   const medicalSpecialties = [
         "Allergy and Immunology",
@@ -62,10 +77,12 @@ function Doctor() {
   const formData = {
     name: '',
     email: '',
+    phone: '',
     licenseNo: '',
     SpecialistIn: '',
     image: '',
-    SpecializeTtreatments: '',
+    specializeTtreatments: '',
+    educationQualifications: '',
     language: '',
     bio: '',
     hospital: '',
@@ -77,9 +94,10 @@ function Doctor() {
   const validationSchema = yup.object().shape({
     name: yup.string().required("Required"),
     email: yup.string().email("Not Valid").required("Required"),
+    phone: yup.string().required("Required"),
     licenseNo: yup.string().required("Required"),
     SpecialistIn: yup.string().required("Required"),
-    SpecializeTtreatments: yup.string().required("Required"),
+    specializeTtreatments: yup.string().required("Required"),
     language: yup.string().required("Required"),
     bio: yup.string().required("Required"),
     hospital: yup.string().required("Required")
@@ -109,6 +127,9 @@ function Doctor() {
               <TextFieldWrapper name='email' label= 'E mail' />
             </Grid>
             <Grid item xs={12} marginBottom={3}>
+              <TextFieldWrapper name='phone' label= 'Contact No' />
+            </Grid>
+            <Grid item xs={12} marginBottom={3}>
               <TextFieldWrapper name='licenseNo' label= 'Licens Number' />
             </Grid>
             <Grid item xs={12} marginBottom={3}>
@@ -119,6 +140,16 @@ function Doctor() {
             </Grid>
 
             <Grid item marginBottom={3}>
+              <Grid item xs={12} marginBottom={3}>
+                <Typography variant='h6'> Add Treatments </Typography>
+              </Grid>
+                {
+                treatments.map((item ,index) => (
+                  <Grid key={item.id} item xs={12} marginBottom={3}>
+                  <TextFieldWrapper name={`specializeTtreatments ${index+1}`} label={`Treatment ${index+1}`}/>
+                </Grid>
+                ))
+                }
               <Grid item xs={12} display={'flex'} flexDirection={'row'} marginBottom={3}>
                   <Grid item sx={{marginRight:2}}>
                     <Button onClick={handleOnClick} variant='contained' color='success'> Add + </Button>
@@ -127,14 +158,29 @@ function Doctor() {
                     <Button onClick={handleOnClose} variant='contained' color='error'> Remove </Button>
                   </Grid>
               </Grid>
+            </Grid>
+
+            <Grid item marginBottom={3}>
+              <Grid item xs={12} marginBottom={3}>
+                <Typography variant='h6'> Add Education </Typography>
+              </Grid>
                 {
-                treatments.map((item ,index) => (
+                education.map((item ,index) => (
                   <Grid key={item.id} item xs={12} marginBottom={3}>
-                  <TextFieldWrapper name={`SpecializeTtreatments ${index+1}`} label={`Treatment ${index+1}`}/>
+                  <TextFieldWrapper name={`educationQualifications ${index+1}`} label={`Education ${index+1}`}/>
                 </Grid>
                 ))
                 }
+              <Grid item xs={12} display={'flex'} flexDirection={'row'} marginBottom={3}>
+                  <Grid item sx={{marginRight:2}}>
+                    <Button onClick={handleOpenEducation} variant='contained' color='success'> Add + </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button onClick={handleCloseEducation} variant='contained' color='error'> Remove </Button>
+                  </Grid>
+              </Grid>
             </Grid>
+
             <Grid item xs={12} display={'flex'} flexDirection={'column'} marginBottom={3}>
               <Typography variant='h6'> Consulting Languages : </Typography>
               <CheckboxWrapper name='sinhala' label='Sinhala' />
