@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid , Button } from '@mui/material';
+import { Grid , Button, Typography } from '@mui/material';
 import TableComponent from '@/components/table';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -11,13 +11,11 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 
 const rows = [
-  { id: 1, headline: 'Snow', description: 'Jon', image: 35 },
-  { id: 2, headline: 'Lannister', description: 'Cersei', image: 42 },
-  { id: 3, headline: 'Lannister', description: 'Jaime', image: 45 },
-  { id: 4, headline: 'Stark', description: 'Arya', image: 16 },
-  { id: 5, headline: 'Targaryen', description: 'Daenerys', image: 44 },
-  { id: 6, headline: 'Melisandre', description: null, image: 150 },
-  { id: 7, headline: 'Clifford', description: 'Ferrara', image: 44 },
+  { id: 1, doctorId: 'Sithum Dashantha', patientId: 'Kavinda Nimesha', date: '2023-02-23', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
+  { id: 2, doctorId: 'Sithum Dashantha', patientId: 'Kavinda Nimesha', date: '2023-02-23', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
+  { id: 3, doctorId: 'Sithum Dashantha', patientId: 'Kavinda Nimesha', date: '2023-02-23', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
+  { id: 4, doctorId: 'Sithum Dashantha', patientId: 'Kavinda Nimesha', date: '2023-02-23', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
+  { id: 5, doctorId: 'Sithum Dashantha', patientId: 'Kavinda Nimesha', date: '2023-02-23', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
 ];
 
 export default function AllReservations() {
@@ -31,20 +29,36 @@ export default function AllReservations() {
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'headline',
-      headerName: 'Headline',
+      field: 'doctorId',
+      headerName: 'Doctor Name',
       width: 150,
     },
     {
-      field: 'description',
-      headerName: 'Description',
+      field: 'patientId',
+      headerName: 'Patient Name',
       flex: 1,
     },
     {
-      field: 'image',
-      headerName: 'Image',
+      field: 'date',
+      headerName: 'Date',
       width: 150,
     },
+    {
+      field: 'time',
+      headerName: 'Time',
+      width: 150,
+    },
+    {
+      field: 'reason',
+      headerName: 'Reason',
+      width: 150,
+    },
+    {
+      field: 'createdAt',
+      headerName: 'Created At',
+      width: 150,
+    },
+   
     {
       field: 'actions',
       headerName: 'Actions',
@@ -65,6 +79,10 @@ export default function AllReservations() {
 
   return (
     <Grid container display={'flex'} justifyContent='center' sx={{ height: '70vh', width: '100%' }}>
+      <Grid item xs={12} align='center' marginBottom={5}>
+        <Typography variant='h4'> All Reservations </Typography>
+      </Grid>
+
         <TableComponent rows={rows}
           columns={columns}
           rowsPerPageOptions={[5 , 10 , 15]}

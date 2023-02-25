@@ -3,7 +3,6 @@ import { Button, Grid, TextField, Typography } from '@mui/material'
 import * as yup from 'yup'
 import { Formik , Form } from 'formik'
 import React from 'react'
-import { Butterfly_Kids } from '@next/font/google'
 
 function Advertisements() {
 
@@ -21,7 +20,7 @@ function Advertisements() {
   return (
     <Grid container>
       <Grid item xs={12} align='center'>
-        <Typography variant='h4'> Create New Advertisements </Typography>
+        <Typography variant='h4'> Create New Advertisement </Typography>
       </Grid>
 
       <Grid container>

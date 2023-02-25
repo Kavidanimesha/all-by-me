@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid , Button } from '@mui/material';
+import { Grid , Button, Typography } from '@mui/material';
 import TableComponent from '@/components/table';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -11,13 +11,11 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 
 const rows = [
-  { id: 1, headline: 'Snow', description: 'Jon', image: 35 },
-  { id: 2, headline: 'Lannister', description: 'Cersei', image: 42 },
-  { id: 3, headline: 'Lannister', description: 'Jaime', image: 45 },
-  { id: 4, headline: 'Stark', description: 'Arya', image: 16 },
-  { id: 5, headline: 'Targaryen', description: 'Daenerys', image: 44 },
-  { id: 6, headline: 'Melisandre', description: null, image: 150 },
-  { id: 7, headline: 'Clifford', description: 'Ferrara', image: 44 },
+  { id: 1, drugName: 'Acetaminophen ', category: 'Analgesics ', description: 'Pain and fever reducer ', dosage: '325-1000mg', manufacture: 'Johnson & Johnson', mfd: '2022-02-01', expire: '2024-02-01'},
+  { id: 2, drugName: 'Acetaminophen ', category: 'Analgesics ', description: 'Pain and fever reducer ', dosage: '325-1000mg', manufacture: 'Johnson & Johnson', mfd: '2022-02-01', expire: '2024-02-01'},
+  { id: 3, drugName: 'Acetaminophen ', category: 'Analgesics ', description: 'Pain and fever reducer ', dosage: '325-1000mg', manufacture: 'Johnson & Johnson', mfd: '2022-02-01', expire: '2024-02-01'},
+  { id: 4, drugName: 'Acetaminophen ', category: 'Analgesics ', description: 'Pain and fever reducer ', dosage: '325-1000mg', manufacture: 'Johnson & Johnson', mfd: '2022-02-01', expire: '2024-02-01'},
+  { id: 5, drugName: 'Acetaminophen ', category: 'Analgesics ', description: 'Pain and fever reducer ', dosage: '325-1000mg', manufacture: 'Johnson & Johnson', mfd: '2022-02-01', expire: '2024-02-01'},
 ];
 
 export default function AllDrugs() {
@@ -31,24 +29,44 @@ export default function AllDrugs() {
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'headline',
-      headerName: 'Headline',
-      width: 150,
+      field: 'drugName',
+      headerName: 'Drug',
+      flex: 1,
+    },
+    {
+      field: 'category',
+      headerName: 'Category',
+      flex: 1,
     },
     {
       field: 'description',
       headerName: 'Description',
+      flex: 2,
+    },
+    {
+      field: 'dosage',
+      headerName: 'Dosage',
       flex: 1,
     },
     {
-      field: 'image',
-      headerName: 'Image',
-      width: 150,
+      field: 'manufacture',
+      headerName: 'Manufacture',
+     flex: 1,
+    },
+    {
+      field: 'mfd',
+      headerName: 'MFD',
+      flex: 1,
+    },
+    {
+      field: 'expire',
+      headerName: 'Expire',
+      flex: 1,
     },
     {
       field: 'actions',
       headerName: 'Actions',
-      width: 150,
+     flex: 1,
       renderCell: (params) => {
         const handleClickOpen = (e) => {
           e.stopPropagation();
@@ -65,6 +83,10 @@ export default function AllDrugs() {
 
   return (
     <Grid container display={'flex'} justifyContent='center' sx={{ height: '70vh', width: '100%' }}>
+        <Grid item xs={12} align='center' marginBottom={5}>
+          <Typography variant='h4'> All Drugs </Typography>
+        </Grid>
+
         <TableComponent rows={rows}
           columns={columns}
           rowsPerPageOptions={[5 , 10 , 15]}

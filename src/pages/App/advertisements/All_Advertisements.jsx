@@ -1,14 +1,15 @@
-import * as React from 'react';
-import { Grid , Button, Typography } from '@mui/material';
+import SelectWrapper from '@/components/formsUI/select/SelectWrapper';
+import TextFieldWrapper from '@/components/formsUI/textfieldValidation/TextFieldWrapper';
 import TableComponent from '@/components/table';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import { Button, Grid, Typography } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import TextField from '@mui/material/TextField';
+import { Form, Formik } from 'formik';
+import * as React from 'react';
+import * as yup from 'yup';
 
 const rows = [
   { id: 1, headline: 'Snow', description: 'Jon', image: 35 },
@@ -21,6 +22,16 @@ const rows = [
 ];
 
 export default function All_Advertisements() {
+
+  const statusArray = ['Accepted' , "Declined"]
+
+  const formData = {
+    status: ''
+  }
+
+  const validateionSchema = yup.object().shape({
+    status: yup.string().required("Required")
+  })
 
   const [open, setOpen] = React.useState(false);
 
@@ -80,26 +91,46 @@ export default function All_Advertisements() {
         />
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
+          <Grid container>
+            <Grid item xs={12} align='center'>
+              <Typography variant='h4'> Create New Advertisement </Typography>
+            </Grid>
+
+            <Grid container>
+              <Formik
+                initialValues={{...formData}}
+                validationSchema={validateionSchema}
+                onSubmit= {(values , reset)=> {
+                    console.log(values);
+                    reset.resetForm();
+                    alert("Saved Successfully");
+                }}
+              >
+                <Grid item xs={12}>
+                  <Form>
+                    <Grid item xs={12} sx={{marginBottom:3}}> 
+                      <TextFieldWrapper name='headline' label='Headline' value= 'Take Care about your Health' /> 
+                    </Grid>
+                    <Grid item xs={12} sx={{marginBottom:3}}> 
+                      <TextFieldWrapper name='description' label='Short Description' value= 'YOUR HEALTH IS OUR FIRST PRIORITY.' />
+                    </Grid>
+                    <Grid item xs={12} sx={{marginBottom:3}}> 
+                      <TextField type='submit' name='image' />
+                    </Grid>   
+                    <Grid item xs={12}>
+                      <SelectWrapper name='status' label='Status' options={statusArray} />
+                    </Grid>         
+                  <Grid item xs={12} display={'flex'} justifyContent='flex-end' align='center' gap={2}>
+                    <Button onClick={handleClose} variant='text' color='error'> Cancel </Button>
+                    <Button type='submit' variant='contained' color='success'> Save </Button>
+                  </Grid> 
+                  </Form>
+                </Grid>
+              </Formik>
+            </Grid>
+          </Grid>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
-        </DialogActions>
       </Dialog>
     </Grid>
   );
