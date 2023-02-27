@@ -19,13 +19,19 @@ import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import { Grid, MenuItem, Typography } from "@mui/material";
+import { Box, Grid, MenuItem, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import React from "react";
 import SideBar from "./sideBar";
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { display } from '@mui/system';
 
 export default function Layout({ children }) {
+
+  const router = useRouter();
+
+ 
 
   const dummyMenuItems = [
     {
@@ -173,9 +179,12 @@ export default function Layout({ children }) {
     },
   ];
 
-  return (
+   if (router.pathname.split("/").at(1) === "app") {
+    // We are in app structure, so we show the sidebar
+
+    return (
     <Grid container sx={{ height: "100vh" }}>
-      <Grid item lg={2} md={3} style={{ backgroundColor: "#BDCDD6" }}>
+      <Grid item lg={2} md={3} style={{ backgroundColor: "#1f2a40" }}>
         {/* Side Bar Content Goes Here */}
         <List
           sx={{
@@ -186,9 +195,9 @@ export default function Layout({ children }) {
           component="nav"
           aria-labelledby="nested-list-subheader"
         >
-          <MenuItem>
-            <Image src='/images/Logo.jpg' width={100} height={100} />
-          </MenuItem>
+          <Grid item xs={12} align='center'>
+              <Image style={{borderRadius: '100%'}} src='/images/Logo.jpg' width={100} height={100} />
+          </Grid>
           {DASHBOARD_LIST.map((item) => (
             <SideBar
               key={item.id}
@@ -203,21 +212,20 @@ export default function Layout({ children }) {
       <Grid item lg={10} md={9}>
         <Grid
           item
-          style={{ Width: 50, height: 70, backgroundColor: "#91C788" }}
+          style={{ Width: 50, height: 70, backgroundColor: "#1f2a40" }}
         >
           <Grid
             container
             display={"flex"}
             flexDirection={"row"}
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: 1,
-            }}
             spacing={2}
+            justifyContent= 'center'
           >
-            <Grid item>
-              <Typography> Kavinda Nimesha </Typography>
+           <Grid container display={'flex'} flexDirection={'row'} justifyContent='flex-end' alignItems='center' spacing={2} marginTop={0}>
+           
+
+               <Grid item> 
+              <Typography style={{color:'white'}}> Kavinda Nimesha </Typography>
             </Grid>
             <Grid item>
       <IconButton
@@ -226,7 +234,9 @@ export default function Layout({ children }) {
         onClick={handleClick}
         aria-label="Open to show more"
         title="Open to show more"
-      >
+        style={{color:'white'}}
+        marginTop={2}
+        >
         <AccountCircleOutlinedIcon fontSize='large'/>
       </IconButton>
       <Menu
@@ -235,7 +245,7 @@ export default function Layout({ children }) {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
-      >
+        >
         {dummyMenuItems.map(item => (
           <MenuItem onClick={handleClose} key={item.title} value={item.title}>
             {item.title}
@@ -243,6 +253,8 @@ export default function Layout({ children }) {
         ))}
       </Menu>
             </Grid>
+            
+           </Grid>
           </Grid>
         </Grid>
         <Grid item sx={{ padding: 5 }}>
@@ -251,4 +263,12 @@ export default function Layout({ children }) {
       </Grid>
     </Grid>
   );
+  } else {
+    // We are not in app structure, so we hide the sidebar
+    return (
+      <Box sx={{ height: "100%", width: "100%" }}>
+      {children}
+      </Box>
+    );
+  }
 }

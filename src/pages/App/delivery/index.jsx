@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { Grid , Button, Typography } from '@mui/material';
 import TableComponent from '@/components/table';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import { Button, Grid, Typography } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import * as yup from 'yup'
+import { Formik , Form } from 'formik';
+import * as React from 'react';
+import TextFieldWrapper from '@/components/formsUI/textfieldValidation/TextFieldWrapper';
+import SelectWrapper from '@/components/formsUI/select/SelectWrapper';
 
 const rows = [
   { id: 1, deliveryId: '1234', orderId: '5896', date: '2023-02-03', address: '123 Main St, Anytown, USA 12345', customer: 'John', phone: '0712478935', status: 'Delivered' },
@@ -18,6 +18,24 @@ const rows = [
   { id: 5, deliveryId: '1238', orderId: '1473', date: '2023-02-03', address: '1212 Pine St, Nowhere, USA 34567', customer: 'Kevin', phone: '0710153756', status: 'Delivered' },
 
 ];
+
+const formData = {
+  name: '',
+  address: '',
+  phone: '',
+  image: '',
+  status: ''
+}
+
+const validationSchema = yup.object().shape({
+  name: yup.string().required("Required"),
+  address: yup.string().required("Required"),
+  phone: yup.number("Phone number Should be a Number").required("Required"),
+  status: yup.string().required("Required")
+})
+
+const statusArray = ['Accepted' , "Declined" , 'Shipped']
+
 
 export default function Delivery() {
 
@@ -42,12 +60,12 @@ export default function Delivery() {
     {
       field: 'date',
       headerName: 'Date',
-      flex: 1,
+      flex: 0.5,
     },
     {
       field: 'address',
       headerName: 'Address',
-      flex: 2,
+      flex: 1,
     },
     {
       field: 'customer',
@@ -74,8 +92,10 @@ export default function Delivery() {
           setOpen(true);
         };
         return <>
-         <Button onClick={handleClickOpen}> <EditTwoToneIcon /> </Button>
-         <Button> <DeleteTwoToneIcon /> </Button>
+        <Grid item xs={12} display={'flex'} flexDirection={'row' }>
+          <Button onClick={handleClickOpen}> <EditTwoToneIcon /> </Button>
+          <Button> <DeleteTwoToneIcon /> </Button>
+         </Grid>
         </>;
       },
       
@@ -99,26 +119,46 @@ export default function Delivery() {
         />
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
+        <Grid item xs={12} align='center' marginTop={2}>
+          <Typography variant='h5'> All Delivery Details </Typography>
+        </Grid>
+        <DialogContent style={{width:500}}>
+          <Grid container >
+            <Formik 
+              initialValues={{...formData}}
+              validationSchema={validationSchema}
+              onSubmit={(values) => {
+                console.log(values)
+                alert("Saved Successfully")
+              }}
+            >
+              <Grid item xs={12}>
+                <Form>
+                  <Grid item xs={12}>
+                    <TextFieldWrapper name='name' label='Full Name' />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextFieldWrapper name='address' label='Address' />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextFieldWrapper name='phone' label='Contact Number' />
+                  </Grid>
+                  <Grid item xs={12} marginTop={2}>
+                    <label> Add Image: </label>
+                    <input type='submit'></input>
+                  </Grid>
+                  <Grid item xs={12} marginTop={2}>
+                    <SelectWrapper name='status' label='Status' options={statusArray} />
+                  </Grid>
+                  <Grid item xs={12} display={'flex'} flexDirection={'row'} justifyContent='flex-end' gap={2} marginBottom={2} marginRight={1}>
+                    <Button onClick={handleClose} variant='outlined' color='error'> Cancel </Button>
+                    <Button type='submit' variant='contained' color='success'> Save </Button>
+                  </Grid >
+                </Form>
+              </Grid>
+            </Formik>
+          </Grid>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
-        </DialogActions>
       </Dialog>
     </Grid>
   );

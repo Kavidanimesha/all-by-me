@@ -91,7 +91,7 @@ function Drugs() {
               <TextFieldWrapper name='description' label='Description' />
             </Grid>
 
-            <Grid container>
+            <Grid container sx={{backgroundImage: new URL ('https://images.app.goo.gl/ceKxyLcqKVXr9kwf8')}}>
               <Grid item xs={12} marginBottom={3}>
                 <Typography variant='h6'> Add Dose </Typography>
               </Grid>

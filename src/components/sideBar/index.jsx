@@ -17,8 +17,8 @@ function SideBar({primaryIcon , primaryTitle , secondaryItems=[] }) {
 
   return(
   <div>
-    <ListItemButton onClick={handleOpen}>
-      <ListItemIcon>
+    <ListItemButton onClick={handleOpen} style={{color:'white'}}>
+      <ListItemIcon style={{color:'white'}}>
         {primaryIcon}
       </ListItemIcon>
       <ListItemText primary={primaryTitle} />
@@ -31,10 +31,10 @@ function SideBar({primaryIcon , primaryTitle , secondaryItems=[] }) {
             {
                 secondaryItems.map((item) =>(
                     <ListItemButton key={item.id} sx={{ pl: 4 }}>
-                        <ListItemIcon>
+                        <ListItemIcon style={{color:'white'}}>
                             {item.secondaryIcon}
                         </ListItemIcon>
-                        <Link style={{textDecoration:'none' , color:'black' }} href={item.path}> <ListItemText primary= {item.secondaryTitle} /> </Link>
+                        <Link style={{textDecoration:'none' , color:'white' , }} href={item.path}> <ListItemText primary= {item.secondaryTitle} /> </Link>
                     </ListItemButton>
                 ))}
         </List>
