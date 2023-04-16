@@ -33,7 +33,6 @@ const formData = {
     name: '',
     category: '',
     description: '',
-    dosage: '',
     manufacturer: '',
     manufactureDate: '',
     expireDate: '' 
@@ -65,6 +64,15 @@ function Drugs() {
 		}
 	}
 
+  const submit = async(values , reset) => {
+    await fetch('http://localhost:5050/drug', {
+      method:"post",
+      body: JSON.stringify(values)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
   return (
     <Grid container>
       <Grid item xs={12} align='center' marginBottom={3}>
@@ -75,8 +83,7 @@ function Drugs() {
         initialValues={{...formData}}
         validationSchema={validationSchema}
         onSubmit={(values , reset) => {
-            console.log(values);
-            reset.resetForm();
+            submit(values , reset)
         }}
       >
         <Grid item xs={12}>

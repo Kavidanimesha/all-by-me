@@ -34,7 +34,7 @@ function SideBar({primaryIcon , primaryTitle , secondaryItems=[] }) {
                         <ListItemIcon style={{color:'white'}}>
                             {item.secondaryIcon}
                         </ListItemIcon>
-                        <Link style={{textDecoration:'none' , color:'white' , }} href={item.path}> <ListItemText primary= {item.secondaryTitle} /> </Link>
+                        <Link style={{textDecoration:'none' , color:'white'  }} href={item.path}> <ListItemText primary= {item.secondaryTitle} /> </Link>
                     </ListItemButton>
                 ))}
         </List>

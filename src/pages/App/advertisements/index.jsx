@@ -2,9 +2,47 @@ import TextFieldWrapper from '@/components/formsUI/textfieldValidation/TextField
 import { Button, Grid, TextField, Typography } from '@mui/material'
 import * as yup from 'yup'
 import { Formik , Form } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
+import Image from 'next/image'
+import { isImage, validateSize } from 'utils/fileValidation'
 
 function Advertisements() {
+
+  const [imageError , setImageError] = useState ()
+  const [imageSrc , setImageSrc] = useState ()
+  const [image , setImage] = useState ()
+
+  const handleImageChange = (e) => {
+    setImageError('');
+    const img = e.target.files[0];
+    // if no image selected
+    if (!img) {
+      return;
+    }
+
+    // check if image
+    const result = isImage(img.name);
+    if (!result) {
+      const error = 'File type should be a image';
+      // toast(error, { type: 'error' });
+      setImageError(error);
+      return;
+    }
+    const isImageLarge = validateSize(img);
+    if (isImageLarge) {
+      const error = 'File must be less or equal to 5MB';
+      toast(error, { type: 'error' });
+      setImageError(error);
+      return;
+    }
+    const reader = new FileReader();
+    // converts to BASE 64
+    reader.readAsDataURL(img);
+    reader.addEventListener('load', () => {
+      setImageSrc(reader.result);
+      setImage(img);
+    });
+  };
 
   const formData = {
     headline:'',
@@ -17,6 +55,22 @@ function Advertisements() {
     description: yup.string().required("Required")
   })
 
+  const submit =async (values , reset) => {
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('headline', values.headline);
+    formData.append('description', values.description);
+    
+    const res = await fetch('/api/create-advertiesment', {
+      method: 'POST',
+      body: formData,
+    });
+    const { error } = await res.json();
+    if (error) {
+      return;
+    }
+  }
+
   return (
     <Grid container>
       <Grid item xs={12} align='center'>
@@ -28,9 +82,7 @@ function Advertisements() {
           initialValues={{...formData}}
           validationSchema={validateionSchema}
           onSubmit= {(values , reset)=> {
-              console.log(values);
-              reset.resetForm();
-              alert("Saved Successfully");
+              submit(values,reset)
           }}
         >
           <Grid item xs={12}>
@@ -41,8 +93,10 @@ function Advertisements() {
               <Grid item xs={12} sx={{marginBottom:3}}> 
                 <TextFieldWrapper name='description' label='Short Description' />
               </Grid>
+
               <Grid item xs={12} sx={{marginBottom:3}}> 
-                <TextField type='submit' name='image' />
+                <input type='file' onChange={handleImageChange} />
+                <p>{imageError}</p>
               </Grid>            
             <Grid item xs={12} align='center'>
               <Button type='submit' variant='contained' color='success'> Save </Button>
@@ -53,6 +107,7 @@ function Advertisements() {
         <Grid container sx={{marginTop:3}}>
           <Grid item xs={12} align='center'>
             <Typography variant='h5'> Preview: </Typography>
+            <Image src={imageSrc} width={1000} height={400} />
           </Grid>
         </Grid>
       </Grid>

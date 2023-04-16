@@ -18,10 +18,10 @@ import TimePickerWraper from '@/components/formsUI/date/time pickers/TimePickerW
 
 const rows = [
   { id: 1, doctorId: 'Sithum Dashantha', patientId: 'Kavinda Nimesha', date: '2023-02-23', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
-  { id: 2, doctorId: 'Sithum Dashantha', patientId: 'Kavinda Nimesha', date: '2023-02-23', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
-  { id: 3, doctorId: 'Sithum Dashantha', patientId: 'Kavinda Nimesha', date: '2023-02-23', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
-  { id: 4, doctorId: 'Sithum Dashantha', patientId: 'Kavinda Nimesha', date: '2023-02-23', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
-  { id: 5, doctorId: 'Sithum Dashantha', patientId: 'Kavinda Nimesha', date: '2023-02-23', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
+  { id: 2, doctorId: 'Nimal Perera', patientId: 'Tharindu KT', date: '2023-02-03', time: '04.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
+  { id: 3, doctorId: 'Ajith Kumara', patientId: 'Ranindu Gamage', date: '2023-04-27', time: '04.15 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
+  { id: 4, doctorId: 'Manoj Kumara', patientId: 'Kavindu Ramesh', date: '2023-12-17', time: '05.15 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
+  { id: 5, doctorId: 'Salila Herath', patientId: 'Pramod Perera', date: '2023-02-01', time: '06.00 p.m', reason: 'Heart Ache', createdAt: '2023-02-23 12.00 p.m' },
 ];
 
 const medicalSpecialties = [

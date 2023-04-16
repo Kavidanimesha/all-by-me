@@ -17,10 +17,10 @@ import CheckboxWrapper from '@/components/formsUI/checkbox/CheckBoxWrapper'
 
 const rows = [
   { id: 1, fullName: 'Sithum Dashantha', contact: '0762065142', licens: 'NC123', speciality: 'Medical Genetics', hospital: 'Badulle' },
-  { id: 2, fullName: 'Sithum Dashantha', contact: '0762065142', licens: 'NC123', speciality: 'Medical Genetics', hospital: 'Badulle' },
-  { id: 3, fullName: 'Sithum Dashantha', contact: '0762065142', licens: 'NC123', speciality: 'Medical Genetics', hospital: 'Badulle' },
-  { id: 4, fullName: 'Sithum Dashantha', contact: '0762065142', licens: 'NC123', speciality: 'Medical Genetics', hospital: 'Badulle' },
-  { id: 5, fullName: 'Sithum Dashantha', contact: '0762065142', licens: 'NC123', speciality: 'Medical Genetics', hospital: 'Badulle' },
+  { id: 2, fullName: 'Nimal Perera', contact: '0710153756', licens: 'NC122', speciality: 'Medical Bladder', hospital: 'Kurunegala' },
+  { id: 3, fullName: 'Ajith Kumara', contact: '0785931475', licens: 'NC177', speciality: 'Medical Gastric', hospital: 'Anuradhapura' },
+  { id: 4, fullName: 'Sunil Herath', contact: '0778169574', licens: 'NC178', speciality: 'Medical Heart', hospital: 'Dambulle' },
+  { id: 5, fullName: 'Manoj Kumara', contact: '0716784215', licens: 'NC173', speciality: 'Medical Asthma', hospital: 'Ragama' },
 ];
 
 const medicalSpecialties = [
