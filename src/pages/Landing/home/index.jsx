@@ -1,27 +1,12 @@
-import * as React from "react";
+import HospitalCards from "@/components/cards/HospitalCards";
+import PharmacyCard from "@/components/cards/PharmacyCards";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Box, Button, Grid, MenuItem } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import { Grid, MenuItem, TextField } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import TextFieldWrapper from "@/components/formsUI/textfieldValidation/TextFieldWrapper";
-import { Formik , Form } from 'formik'
-import PharmacyCards from "@/components/cards/PharmacyCards";
-import HospitalCards from "@/components/cards/HospitalCards";
-import SpeechRecognition, {
-  useSpeechRecognition
-} from "react-speech-recognition";
-import regeneratorRuntime from "regenerator-runtime";
- 
 
 const divStyle = {
   display: "flex",
@@ -54,17 +39,7 @@ const pharmacy = [
   },
 ];
 
-
-function Landing() {
-
-  const { transcript, resetTranscript } = useSpeechRecognition({
-    continuous: true
-  });
- 
-  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    return null;
-  }
-
+function Landing({ cards, channels }) {
   return (
     <>
       <Grid sx={{ flexGrow: 1 }}>
@@ -166,7 +141,22 @@ function Landing() {
       </Grid>
 
       {/* pharmacy Cards */}
-      <PharmacyCards />
+      <Grid
+        container
+        sx={{ margin: 5 }}
+        display={"flex"}
+        flexDirection={"row"}
+        spacing={2}
+      >
+        {cards?.map((card) => (
+          <PharmacyCard
+            key={card._id}
+            name={card.name}
+            description={card.description}
+            image={card.image}
+          />
+        ))}
+      </Grid>
 
       <Grid item xs={12} align="center" marginBottom={3} marginTop={3}>
         <Typography variant="h5" color="primary">
@@ -175,16 +165,53 @@ function Landing() {
       </Grid>
 
       {/* Hospital Cards */}
-      <HospitalCards />
-
-      <div>
-      <button onClick={SpeechRecognition.startListening}>Start</button>
-      <button onClick={SpeechRecognition.stopListening}>Stop</button>
-      <button onClick={resetTranscript}>Reset</button>
-      <p>{transcript}</p>
-    </div>
+      <Grid
+        container
+        sx={{ margin: 5 }}
+        display={"flex"}
+        flexDirection={"row"}
+        spacing={2}
+      >
+        {channels?.map((card) => (
+          <HospitalCards
+            key={card._id}
+            name={card.name}
+            description={card.description}
+            image={card.image}
+          />
+        ))}
+      </Grid>
     </>
   );
 }
 
 export default Landing;
+
+export async function getStaticProps() {
+  const cardsResponse = await fetch("http://localhost:5050/pharmacy_card", {
+    method: "GET",
+    options: {
+      "Access-Control-Allow-Credentials": "*",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+    },
+  });
+  const pharmacy_cards = await cardsResponse.json();
+
+  const channelsResponse = await fetch("http://localhost:5050/channel", {
+    method: "GET",
+    options: {
+      "Access-Control-Allow-Credentials": "*",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+    },
+  });
+
+  const channels = await channelsResponse.json();
+  return {
+    props: {
+      cards: pharmacy_cards,
+      channels,
+    },
+  };
+}

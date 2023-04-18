@@ -1,5 +1,4 @@
 import Head from "next/head";
-import AutocompleteWithSpeechRecognition from '../components/Autocomplete';
 
 export default function Home() {
   return (
@@ -11,7 +10,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-      <AutocompleteWithSpeechRecognition />
     </div>
       
     </>

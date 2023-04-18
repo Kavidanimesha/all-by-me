@@ -15,14 +15,6 @@ import SelectWrapper from '@/components/formsUI/select/SelectWrapper'
 import TextFieldWrapper from '@/components/formsUI/textfieldValidation/TextFieldWrapper'
 import CheckboxWrapper from '@/components/formsUI/checkbox/CheckBoxWrapper'
 
-const rows = [
-  { id: 1, fullName: 'Sithum Dashantha', contact: '0762065142', licens: 'NC123', speciality: 'Medical Genetics', hospital: 'Badulle' },
-  { id: 2, fullName: 'Nimal Perera', contact: '0710153756', licens: 'NC122', speciality: 'Medical Bladder', hospital: 'Kurunegala' },
-  { id: 3, fullName: 'Ajith Kumara', contact: '0785931475', licens: 'NC177', speciality: 'Medical Gastric', hospital: 'Anuradhapura' },
-  { id: 4, fullName: 'Sunil Herath', contact: '0778169574', licens: 'NC178', speciality: 'Medical Heart', hospital: 'Dambulle' },
-  { id: 5, fullName: 'Manoj Kumara', contact: '0716784215', licens: 'NC173', speciality: 'Medical Asthma', hospital: 'Ragama' },
-];
-
 const medicalSpecialties = [
   "Allergy and Immunology",
   "Anesthesiology",
@@ -83,7 +75,7 @@ const validationSchema = yup.object().shape({
   hospital: yup.string().required("Required"),
 })
 
-export default function AllDoctors() {
+export default function AllDoctors({doctors}) {
 
   const [ treatments, setTreatments ] = useState([1]);
 	
@@ -123,9 +115,9 @@ export default function AllDoctors() {
   };
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
+    { field: '_id', headerName: 'ID', width: 90 },
     {
-      field: 'fullName',
+      field: 'name',
       headerName: 'Full Name',
       flex: 1
     },
@@ -173,7 +165,7 @@ export default function AllDoctors() {
         <Typography variant='h4'> All Doctors </Typography>
       </Grid>
 
-        <TableComponent rows={rows}
+        <TableComponent rows={doctors}
           columns={columns}
           rowsPerPageOptions={[5 , 10 , 15]}
           checkboxSelection
@@ -284,4 +276,22 @@ export default function AllDoctors() {
       </Dialog>
     </Grid>
   );
+}
+
+
+export async function getStaticProps() {
+  const res = await fetch("http://localhost:5050/doctor" , {
+      method: "GET",
+      options: {
+          "Access-Control-Allow-Credentials": "*",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+        
+}})
+  const doctors = await res.json()
+  return {
+    props: {
+      doctors,
+    },
+  }
 }
