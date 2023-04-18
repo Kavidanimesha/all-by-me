@@ -18,6 +18,7 @@ function TableComponent({columns , rows ,rowsPerPageOptions, checkboxSelection, 
         checkboxSelection={checkboxSelection}
         disableSelectionOnClick={disableSelectionOnClick}
         sx={{...sx}}
+        getRowId={(row) => row._id }
       />
   )
 }

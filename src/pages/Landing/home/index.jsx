@@ -15,6 +15,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import TextFieldWrapper from "@/components/formsUI/textfieldValidation/TextFieldWrapper";
 import { Formik , Form } from 'formik'
+import PharmacyCards from "@/components/cards/PharmacyCards";
+import HospitalCards from "@/components/cards/HospitalCards";
+import SpeechRecognition, {
+  useSpeechRecognition
+} from "react-speech-recognition";
 
 const divStyle = {
   display: "flex",
@@ -47,36 +52,16 @@ const pharmacy = [
   },
 ];
 
-const deliveryFormData = {
-  drug: '',
-  dose: '',
-  name:'',
-  phone: '',
-  address: ''
-}
-
 
 function Landing() {
 
-  const [openPharmacy, setOpenPharmacy] = React.useState(false);
-
-  const handleClickOpenPharmacy = () => {
-    setOpenPharmacy(true);
-  };
-
-  const handleClosePharmacy = () => {
-    setOpenPharmacy(false);
-  };
-
-  const [openHospital, setOpenHospital] = React.useState(false);
-
-  const handleClickOpenHospital = () => {
-    setOpenHospital(true);
-  };
-
-  const handleCloseHospital = () => {
-    setOpenHospital(false);
-  };
+  const { transcript, resetTranscript } = useSpeechRecognition({
+    continuous: true
+  });
+ 
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    return null;
+  }
 
   return (
     <>
@@ -179,86 +164,7 @@ function Landing() {
       </Grid>
 
       {/* pharmacy Cards */}
-      <Grid container>
-        <Grid item>
-          <Card sx={{ maxWidth: 345 , border: 2 , borderColor: 'blue' }}>
-            <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image="/images/pharmacy/pharmacy1.png"
-                  alt="green iguana"
-                />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Lizard
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over 6,000
-                  species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-            </CardActionArea>           
-              <Grid container>
-                <Grid item xs={12} align='center' marginTop={2} marginBottom={2}>
-                  <Button variant="contained" color = 'success' onClick={handleClickOpenPharmacy}>
-                    Deliver
-                  </Button>
-                </Grid>
-                <Dialog open={openPharmacy} onClose={handleClosePharmacy}>
-                  <Grid container style={{padding: 10}}>
-                    <DialogContent>
-                      <Typography variant="h4">
-                        Delivery Request Form
-                      </Typography>
-                      <Typography variant="h6" sx={{marginTop: 2 , marginBottom: 2}} color='#7b1fa2'>
-                        Delivery Details
-                      </Typography>
-                      <Formik
-                        initialValues={{...deliveryFormData}}
-                        onSubmit={(values) => {
-                          console.log(values)
-                          alert("Saved Successfully")
-                        }}
-                      >
-                        <Form>
-                          <Grid container marginTop={1} display={'flex'} flexDirection={'row'} spacing={2} border={1} borderColor='blue' padding={2}>
-                            <Grid item xs={6}>
-                              <TextFieldWrapper name='drug' label='Drug Name' />
-                            </Grid>
-                            <Grid item xs={6}>
-                              <TextFieldWrapper name='dose' label='Dose' />
-                            </Grid>
-                            <Grid item display={'flex'} flexDirection={'row'} gap={2}>
-                              <Button variant='contained' color='success' > Add+ </Button>
-                              <Button variant='contained' color='error'> Remove </Button>
-                            </Grid>
-                          </Grid>
-
-                          <Grid container>
-                            <Typography variant="h6" color='#7b1fa2' sx={{marginTop: 2 , marginBottom: 2}}>
-                              Personal Details
-                            </Typography>
-                            <Grid item xs={12} display={'flex'} flexDirection={'column'} gap={1} > 
-                              <TextFieldWrapper name='name' label='Name' />
-                              <TextFieldWrapper name='phone' label='Phone' />
-                              <TextFieldWrapper name='address' label='Address' />
-                            </Grid>
-                          </Grid>
-
-                          <DialogActions>
-                            <Button variant="outlined" color = 'error' onClick={handleClosePharmacy}> Close </Button>
-                            <Button variant='outlined' color='success' type="submit" > Send </Button>
-                          </DialogActions>
-                        </Form>
-                      </Formik>
-                    </DialogContent>
-                  </Grid>
-                </Dialog>
-              </Grid>           
-          </Card>
-        </Grid>
-      </Grid>
+      <PharmacyCards />
 
       <Grid item xs={12} align="center" marginBottom={3} marginTop={3}>
         <Typography variant="h5" color="primary">
@@ -267,46 +173,15 @@ function Landing() {
       </Grid>
 
       {/* Hospital Cards */}
-      <Grid container>
-        <Grid item>
-          <Card sx={{ maxWidth: 345 , border: 2 , borderColor: 'blue' }}>
-            <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image="/images/hospital/Hospital1.png"
-                  alt="green iguana"
-                />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Lizard
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over 6,000
-                  species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-            </CardActionArea>           
-              <Grid container>
-                <Grid item xs={12} align='center' marginTop={2} marginBottom={2}>
-                  <Button variant="contained" color = 'success' onClick={handleClickOpenHospital}>
-                    Deliver
-                  </Button>
-                </Grid>
-                <Dialog open={openHospital} onClose={handleCloseHospital}>
-                  <Grid container style={{padding: 10}}>
-                    <DialogContent>
-                      <DialogActions>
-                        <Button variant="outlined" color = 'error' onClick={handleCloseHospital}> Close </Button>
-                        <Button variant='outlined' color='success' type="submit" > Send </Button>
-                      </DialogActions>
-                    </DialogContent>
-                  </Grid>
-                </Dialog>
-              </Grid>           
-          </Card>
-        </Grid>
-      </Grid>
+      <HospitalCards />
+
+      <div>
+      <button onClick={SpeechRecognition.startListening}>Start</button>
+      <button onClick={SpeechRecognition.stopListening}>Stop</button>
+      <button onClick={resetTranscript}>Reset</button>
+      <p>{transcript}</p>
+    </div>
+
     </>
   );
 }

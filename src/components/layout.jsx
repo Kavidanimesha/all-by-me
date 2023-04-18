@@ -77,6 +77,39 @@ export default function Layout({ children }) {
     },
     {
       id: 2,
+      primaryIcon: <BookmarkAddedIcon />,
+      primaryTitle: "Display Cards",
+      secondaryItems: [
+        {
+          id: 1,
+          secondaryIcon: <FileOpenIcon />,
+          secondaryTitle: "Pharmacy Cards",
+          path: "/app/displayCards/AddPharmacyCard",
+        },
+        {
+          id: 2,
+          secondaryIcon: <FileOpenIcon />,
+          secondaryTitle: "Channel Centre Cards",
+          path: "/app/displayCards/AddCentreCard",
+        },
+      ],
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+      id: 3,
       primaryIcon: <DeliveryDiningIcon />,
       primaryTitle: "Delivery",
       secondaryItems: [
@@ -89,7 +122,7 @@ export default function Layout({ children }) {
       ],
     },
     {
-      id: 3,
+      id: 4,
       primaryIcon: <PersonIcon />,
       primaryTitle: "Doctor",
       secondaryItems: [
@@ -108,7 +141,7 @@ export default function Layout({ children }) {
       ]
     },
     {
-      id: 4,
+      id: 5,
       primaryIcon: <MedicalServicesIcon />,
       primaryTitle: "Drugs",
       secondaryItems: [
@@ -127,7 +160,7 @@ export default function Layout({ children }) {
       ],
     },
     {
-      id: 5,
+      id: 6,
       primaryIcon: <FileCopyIcon />,
       primaryTitle: "Patient Records",
       secondaryItems: [
@@ -146,7 +179,7 @@ export default function Layout({ children }) {
       ],
     },
     {
-      id: 6,
+      id: 7,
       primaryIcon: <InsertDriveFileIcon />,
       primaryTitle: "E-Prescription",
       secondaryItems: [
@@ -165,7 +198,7 @@ export default function Layout({ children }) {
       ],
     },
     {
-      id: 7,
+      id: 8,
       primaryIcon: <BookmarkIcon />,
       primaryTitle: "Reservations",
       secondaryItems: [

@@ -14,15 +14,15 @@ import TextFieldWrapper from '@/components/formsUI/textfieldValidation/TextField
 import * as yup from 'yup'
 import { Formik , Form } from 'formik'
 
-const rows = [
-  { id: 1, headline: 'Snow', description: 'Jon', image: 35 },
-  { id: 2, headline: 'Lannister', description: 'Cersei', image: 42 },
-  { id: 3, headline: 'Lannister', description: 'Jaime', image: 45 },
-  { id: 4, headline: 'Stark', description: 'Arya', image: 16 },
-  { id: 5, headline: 'Targaryen', description: 'Daenerys', image: 44 },
-  { id: 6, headline: 'Melisandre', description: null, image: 150 },
-  { id: 7, headline: 'Clifford', description: 'Ferrara', image: 44 },
-];
+// const rows = [
+//   { id: 1, headline: 'Snow', description: 'Jon', image: 35 },
+//   { id: 2, headline: 'Lannister', description: 'Cersei', image: 42 },
+//   { id: 3, headline: 'Lannister', description: 'Jaime', image: 45 },
+//   { id: 4, headline: 'Stark', description: 'Arya', image: 16 },
+//   { id: 5, headline: 'Targaryen', description: 'Daenerys', image: 44 },
+//   { id: 6, headline: 'Melisandre', description: null, image: 150 },
+//   { id: 7, headline: 'Clifford', description: 'Ferrara', image: 44 },
+// ];
 
 const drugArray = [
   "Acetaminophen",
@@ -115,7 +115,7 @@ const vaidationSchema = yup.object().shape({
   frequency: yup.string().required('Required')
 })
 
-export default function AllPrescriptions() {
+export default function AllPrescriptions({prescription}) {
 
   const [open, setOpen] = React.useState(false);
 
@@ -126,18 +126,23 @@ export default function AllPrescriptions() {
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'headline',
-      headerName: 'Headline',
+      field: 'regNum',
+      headerName: 'RegNumber',
       width: 150,
     },
     {
-      field: 'description',
-      headerName: 'Description',
+      field: 'name',
+      headerName: 'Name',
       flex: 1,
     },
     {
-      field: 'image',
-      headerName: 'Image',
+      field: 'nic',
+      headerName: 'NIC',
+      width: 150,
+    },
+    {
+      field: 'nic',
+      headerName: 'NIC',
       width: 150,
     },
     {
@@ -160,7 +165,7 @@ export default function AllPrescriptions() {
 
   return (
     <Grid container display={'flex'} justifyContent='center' sx={{ height: '70vh', width: '100%' }}>
-        <TableComponent rows={rows}
+        <TableComponent rows={prescription}
           columns={columns}
           rowsPerPageOptions={[5 , 10 , 15]}
           checkboxSelection
@@ -227,4 +232,21 @@ export default function AllPrescriptions() {
       </Dialog>
     </Grid>
   );
+}
+
+export async function getStaticProps() {
+  const res = await fetch("http://localhost:5050/prescription" , {
+      method: "GET",
+      options: {
+          "Access-Control-Allow-Credentials": "*",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+        
+}})
+  const prescription = await res.json()
+  return {
+    props: {
+      prescription,
+    },
+  }
 }

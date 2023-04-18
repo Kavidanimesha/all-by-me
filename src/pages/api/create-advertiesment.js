@@ -1,17 +1,68 @@
 import DatauriParser from 'datauri/parser';
 import cloudinary from 'utils/cloudinary';
 
-export default function handler(req, res) {
-    // get parsed image and video from multer
-    const image = req.files.filter((file) => file.fieldname === 'image')[0];
-     // create a neew Data URI parser
-     const parser = new DatauriParser();
-     try {
-       // create image
-       const createImage = async (img) => {
-         const base64Image = parser.format(path.extname(img.originalname).toString(), img.buffer);
-         const uploadedImageResponse = await cloudinary.uploader.upload(base64Image.content, 'advertisement', { resource_type: 'image' });
-         return uploadedImageResponse;
-       }}
+export default async function handler(req, res) {
+  const response = await fetch("http://localhost:5050/advertisement", {
+    method: "POST",
+    headers: {
+      "Access-Control-Allow-Credentials": "*",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods":
+        "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+    },
+    body: req.body,
+  });
+  const advertisements = await response.json()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+     
     res.status(200).json({ name: 'John Doe' })
   }

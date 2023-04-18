@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TableComponent from '@/components/table';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
@@ -11,13 +11,6 @@ import { Formik , Form } from 'formik'
 import DatePIckerWrapper from '@/components/formsUI/date/time pickers/DatePIckerWrapper'
 import * as yup from 'yup'
 
-const rows = [
-  { id: 1, drugName: 'Acetaminophen ', category: 'Analgesics ', description: 'Pain and fever reducer ', dosage: '325-1000mg', manufacture: 'Johnson & Johnson', mfd: '2022-02-01', expire: '2024-02-01'},
-  { id: 2, drugName: 'Acetaminophen ', category: 'Analgesics ', description: 'Pain and fever reducer ', dosage: '325-1000mg', manufacture: 'Johnson & Johnson', mfd: '2022-02-01', expire: '2024-02-01'},
-  { id: 3, drugName: 'Acetaminophen ', category: 'Analgesics ', description: 'Pain and fever reducer ', dosage: '325-1000mg', manufacture: 'Johnson & Johnson', mfd: '2022-02-01', expire: '2024-02-01'},
-  { id: 4, drugName: 'Acetaminophen ', category: 'Analgesics ', description: 'Pain and fever reducer ', dosage: '325-1000mg', manufacture: 'Johnson & Johnson', mfd: '2022-02-01', expire: '2024-02-01'},
-  { id: 5, drugName: 'Acetaminophen ', category: 'Analgesics ', description: 'Pain and fever reducer ', dosage: '325-1000mg', manufacture: 'Johnson & Johnson', mfd: '2022-02-01', expire: '2024-02-01'},
-];
 
 const medicineCategories = [
   "Analgesics",
@@ -62,7 +55,7 @@ const validationSchema = yup.object().shape({
 })
 
 
-export default function AllDrugs() {
+export default function AllDrugs({drugs}) {
 
   const [ dose, setDose ] = useState([1]);
 	
@@ -86,9 +79,9 @@ export default function AllDrugs() {
   };
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
+    { field: '_id', headerName: 'ID', width: 90 },
     {
-      field: 'drugName',
+      field: 'name',
       headerName: 'Drug',
       flex: 1,
     },
@@ -103,22 +96,17 @@ export default function AllDrugs() {
       flex: 1,
     },
     {
-      field: 'dosage',
-      headerName: 'Dosage',
-      flex: 1,
-    },
-    {
-      field: 'manufacture',
+      field: 'manufacturer',
       headerName: 'Manufacture',
      flex: 1,
     },
     {
-      field: 'mfd',
+      field: 'manufactureDate',
       headerName: 'MFD',
       flex: 1,
     },
     {
-      field: 'expire',
+      field: 'expireDate',
       headerName: 'Expire',
       flex: 1,
     },
@@ -141,6 +129,7 @@ export default function AllDrugs() {
       
     }
   ];
+// FEtch All Drugs
 
   return (
     <Grid container display={'flex'} justifyContent='center' sx={{ height: '70vh', width: '100%' }}>
@@ -148,7 +137,7 @@ export default function AllDrugs() {
           <Typography variant='h4'> All Drugs </Typography>
         </Grid>
 
-        <TableComponent rows={rows}
+        <TableComponent rows={drugs}
           columns={columns}
           rowsPerPageOptions={[5 , 10 , 15]}
           checkboxSelection
@@ -168,7 +157,7 @@ export default function AllDrugs() {
             validationSchema={validationSchema}
             onSubmit={(values , reset) => {
                 console.log(values);
-                reset.resetForm();
+                alert("Saved Successfully")
             }}
           >
             <Grid item xs={12}>
@@ -228,3 +217,22 @@ export default function AllDrugs() {
     </Grid>
   );
 }
+
+
+export async function getStaticProps() {
+  const res = await fetch("http://localhost:5050/drug" , {
+      method: "GET",
+      options: {
+          "Access-Control-Allow-Credentials": "*",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+        
+}})
+  const drugs = await res.json()
+  return {
+    props: {
+      drugs,
+    },
+  }
+}
+
