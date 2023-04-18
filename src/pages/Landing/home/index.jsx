@@ -20,6 +20,8 @@ import HospitalCards from "@/components/cards/HospitalCards";
 import SpeechRecognition, {
   useSpeechRecognition
 } from "react-speech-recognition";
+import regeneratorRuntime from "regenerator-runtime";
+ 
 
 const divStyle = {
   display: "flex",
@@ -181,7 +183,6 @@ function Landing() {
       <button onClick={resetTranscript}>Reset</button>
       <p>{transcript}</p>
     </div>
-
     </>
   );
 }
