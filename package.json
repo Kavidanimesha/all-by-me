@@ -9,15 +9,45 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.5",
+    "@emotion/react": "^11.10.6",
     "@emotion/server": "^11.10.0",
-    "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.11.8",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/lab": "^5.0.0-alpha.127",
+    "@mui/material": "^5.12.1",
+    "@mui/x-data-grid": "^5.17.24",
     "@next/font": "13.1.6",
+    "apexcharts": "^3.37.1",
+    "cloudinary": "^1.35.0",
+    "datauri": "^4.1.0",
+    "echarts": "^5.4.1",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "formik": "^2.2.9",
+    "i": "^0.3.7",
+    "material-icons": "^1.13.1",
+    "multer": "^1.4.5-lts.1",
     "next": "13.1.6",
+    "npm": "^9.6.4",
+    "pdf-fonts": "^1.1.2",
+    "pdfmake": "^0.2.7",
+    "prop-types": "^15.8.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
-  }
+    "react-apexcharts": "^1.4.0",
+    "react-auto-image-slider": "^1.0.0",
+    "react-dom": "18.2.0",
+    "react-slideshow-image": "^4.2.1",
+    "react-speech-recognition": "^3.10.0",
+    "yup": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/plugin-transform-runtime": "^7.21.4",
+    "@babel/runtime": "^7.21.0",
+    "@babel/runtime-corejs3": "^7.21.0"
+  },
+
+  "browserslist": [
+    "last 2 Chrome versions"
+  ]
 }
