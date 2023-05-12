@@ -41,7 +41,7 @@ function AddCentreCard() {
                 </Grid>
                 <Grid item xs={12}>
                     Add Image : 
-                    <input type='submit' name='image' /> 
+                    <input type='file' name='image' /> 
                 </Grid>
                 <Grid item xs={12} align='center'>
                     <Button type='submit' variant='contained' color='success' > Save </Button>

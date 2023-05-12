@@ -86,6 +86,7 @@ function Drugs() {
           });
 
           const drugs = await res.json();
+          alert("Saved Successfully")
         }}
       >
         <Grid item xs={12}>

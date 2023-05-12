@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import * as echarts from 'echarts';
 import { Grid, Typography } from '@mui/material';
 
-function MyChart() {
+function MyChart({heartRates}) {
   useEffect(() => {
     const chart = echarts.init(document.getElementById('BP'));
 
@@ -48,14 +48,14 @@ function MyChart() {
         }
       },
       series: [{
-        data: [70, 62, 89, 90, 83, 70,60, 100, 58, 77, 65, 85],
+        data: heartRates.map((rate) => rate.heartRate),
         type: 'line',
         color: '#060047'
       }]
     };
 
     chart.setOption(options);
-  }, []);
+  }, [heartRates]);
 
   useEffect(() => {
     const chart = echarts.init(document.getElementById('RR'));
@@ -138,3 +138,20 @@ function MyChart() {
 }
 
 export default MyChart;
+
+export async function getStaticProps() {
+  const res = await fetch("http://localhost:5050/records/heart-rate" , {
+      method: "GET",
+      options: {
+          "Access-Control-Allow-Credentials": "*",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+        
+}})
+  const heartRates = await res.json()
+  return {
+    props: {
+      heartRates,
+    },
+  }
+}
